@@ -1,5 +1,5 @@
 '''
-    * plot_lines.py
+    * plot_2D_lines.py
     * Author: Ty Nguyen [tynguyen@seas.upenn.edu]
 
     * Plot line figure. Each line represents the data given from a single file specified by an extension (default: txt),
@@ -7,6 +7,7 @@
 '''
 import os, glob
 from pylab import *
+import pylab
 import pdb 
 import argparse 
 from utils.plot_colors import gen_colors 
@@ -60,7 +61,61 @@ def proceed_data(data, func_name):
     
     data = func_map[func_name](data, axis=1)
     return data
+
+def plot_data(ax):
+    # now all plot function should be applied to ax
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['left'].set_visible(False)
+    ax.get_xaxis().tick_bottom()
+    ax.get_yaxis().tick_left()
+    ax.tick_params(axis='x', direction='out')
+    ax.tick_params(axis='y', length=0)
+    # offset the spines
+    for spine in ax.spines.values():
+    	spine.set_position(('outward', 5))
+    ax.grid(axis='y', color="0.9", linestyle='-', linewidth=1)
+    # put the grid behind
+    ax.set_axisbelow(True)
+
+    # Get x values
+    if 'x_values' not in opt or len(opt['x_values'])==0:
+        assert len(opt['xlim']) > 0, "Either x_values or xlim must be given in the config file"
+
+        x_values = range(opt['xlim'])
+    else:
+        x_values = opt['x_values']
     
+    for i in range(num_lines):
+        pylab.plot(x_values, data[i], linewidth=2, color=colors[i], linestyle=line_styles[i][0])
+    
+    if opt['xlim']:
+        xlim(opt['xlim'][0], opt['xlim'][1])
+    if opt['ylim']:
+        ylim(opt['ylim'][0], opt['ylim'][1])
+    
+    if opt['xticks']:
+        ax.xaxis.set_ticks(opt['xticks'])
+    if opt['xlabels']:
+        ax.xaxis.set_ticklabels(opt['xlabels'])
+    if opt['yticks']:
+        ax.yaxis.set_ticks(opt['yticks'])
+    if opt['ylabels']:
+        ax.yaxis.set_ticklabels(opt['ylabels'])
+    if opt['xtitle']:
+        ax.set_xlabel(opt['xtitle'])
+    if opt['ytitle']:
+        ax.set_ylabel(opt['ytitle'])
+
+
+    
+    legend = ax.legend(opt['legends'], loc=4);
+    frame = legend.get_frame()
+    frame.set_facecolor('0.9')
+    frame.set_edgecolor('0.9')
+    
+    # Display xticks evenly regardless of their values:
+    #ax.xaxis.set_minor_locator(plt.MultipleLocator(len(x_values))) # locates ticks at a multiple of the number you provide, as here 0.25 (keeps ticks evenly spaced)
 
 if __name__=="__main__":
     opt  = parse_configs() 
@@ -85,38 +140,12 @@ if __name__=="__main__":
     if not os.path.exists(opt['saving_dir']):
         os.makedirs(opt['saving_dir'])
     fig_file  = os.path.join(opt['saving_dir'], opt['fig_name'])
-    
+   
     # Start drawing
-    axes(frameon=0)
-    grid()
     
-    # Get x values
-    if 'x_values' not in opt or len(opt['x_values'])==0:
-        assert len(opt['xlim']) > 0, "Either x_values or xlim must be given in the config file"
-
-        x_values = range(opt['xlim'])
-    else:
-        x_values = opt['x_values']
-    
-    for i in range(num_lines):
-        #plot(x_values, data[i], linewidth=2, color=colors[i], linestyle=line_styles[i])
-        plot(x_values, data[i], linewidth=2, color='r', linestyle='solid')
-    
-    if opt['xlim']:
-        xlim(opt['xlim'][0], opt['xlim'][1])
-    if opt['ylim']:
-        ylim(opt['ylim'][0], opt['ylim'][1])
-    
-    pdb.set_trace()
-    if opt['xticks'] and opt['xlabels']:
-        xticks(ticks=opt['xticks'],labels=opt['xlabels'])
-    elif opt['xticks']:
-        xticks(opt['xticks'])
-
-    legend = legend(opt['legends'], loc=4);
-    frame = legend.get_frame()
-    frame.set_facecolor('0.9')
-    frame.set_edgecolor('0.9')
+    fig = figure()
+    ax1 = fig.add_subplot(111)
+    plot_data(ax1)
     plt.show()
-    savefig(fig_file)
+    fig.savefig(fig_file)
     print(f'Successfuly saved figure {fig_file}!')

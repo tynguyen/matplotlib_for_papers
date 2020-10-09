@@ -13,15 +13,26 @@ extension:
 skip_rows:
     1
 xlim:
-    [-10,600]
+    [-1,6]
+    #[-10,600]
 ylim:
-    [0,1]
+    [0.6,0.82]
 xlabels:
     ['zero-shot','one-shot','5-shot','50-shot','200-shot', 'all-shot']
 xticks:
-    [0,1,5,50,200,600]
+    [0,1,2,3,4,5]
+    #[0,1,5,50,200,600]
 x_values:
-    [0,1,5,50,200,575]
+    [0,1,2,3,4,5]
+    #[0,1,5,50,200,575]
+yticks:
+    [0.60,0.65,0.70,0.75,0.80]
+ylabels:
+    []
+xtitle:
+    'N-shot Models'
+ytitle:
+    'mAP'
 legends:
     ['N-shot Detection mAP']
 reduce_func:
