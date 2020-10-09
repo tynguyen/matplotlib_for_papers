@@ -1,14 +1,15 @@
 import glob
 from pylab import *
-
+import matplotlib as mpl
 
 params = {
     'axes.labelsize': 8,
-    'text.fontsize': 8,
+    'font.size': 8,
+    'font.family': {'monospace','serif','sans'},
     'legend.fontsize': 10,
     'xtick.labelsize': 10,
     'ytick.labelsize': 10,
-    'text.usetex': False,
+    'text.usetex': True,
     'figure.figsize': [4.5, 4.5]
 }
 rcParams.update(params)
