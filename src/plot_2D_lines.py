@@ -62,7 +62,7 @@ def proceed_data(data, func_name):
     data = func_map[func_name](data, axis=1)
     return data
 
-def plot_data(ax):
+def plot_line(ax):
     # now all plot function should be applied to ax
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
@@ -74,7 +74,8 @@ def plot_data(ax):
     # offset the spines
     for spine in ax.spines.values():
     	spine.set_position(('outward', 5))
-    ax.grid(axis='y', color="0.9", linestyle='-', linewidth=1)
+    ax.grid(axis='y', color="0.9", linestyle='dashed', linewidth=1)
+    ax.grid(axis='x', color="0.9", linestyle='dashed', linewidth=1)
     # put the grid behind
     ax.set_axisbelow(True)
 
@@ -87,7 +88,7 @@ def plot_data(ax):
         x_values = opt['x_values']
     
     for i in range(num_lines):
-        pylab.plot(x_values, data[i], linewidth=2, color=colors[i], linestyle=line_styles[i][0])
+        ax.plot(x_values, data[i], linewidth=2, color=colors[i], linestyle=line_styles[i][0])
     
     if opt['xlim']:
         xlim(opt['xlim'][0], opt['xlim'][1])
@@ -117,6 +118,20 @@ def plot_data(ax):
     # Display xticks evenly regardless of their values:
     #ax.xaxis.set_minor_locator(plt.MultipleLocator(len(x_values))) # locates ticks at a multiple of the number you provide, as here 0.25 (keeps ticks evenly spaced)
 
+def plot_points(ax, point_values, point_labels, point_markers):
+    '''
+    Plot points
+    ax (mpl.axes): subplot to display 
+    point_values (list(list)): points i.e. [[5,0.743], [0,0.601]] 
+    point_labels (list(str)): labels of points i.e. ['Baseline', 'Zero-shot'] 
+    point_markers(list(str)): markers for each point i.e. ['rs', 'bo'] 
+    '''
+    for i, (point, label, marker) in enumerate(zip(point_values, point_labels, point_markers)):
+        #ax.annotate(f'{label}', xy=point, xytext=(point[0]+10, point[1]-10), textcoords=label)
+        ax.annotate(f'{label}', xy=point, xytext=(-20,10), textcoords='offset points')
+        ax.plot(point[0], point[1], marker)
+        
+
 if __name__=="__main__":
     opt  = parse_configs() 
     data = load(root= opt['root_dir'],
@@ -142,10 +157,13 @@ if __name__=="__main__":
     fig_file  = os.path.join(opt['saving_dir'], opt['fig_name'])
    
     # Start drawing
-    
     fig = figure()
     ax1 = fig.add_subplot(111)
-    plot_data(ax1)
+    plot_line(ax1)
+
+    if len(opt['point_values']) > 0:
+        plot_points(ax1, opt['point_values'], opt['point_labels'], opt['point_markers'])
+
     plt.show()
     fig.savefig(fig_file)
     print(f'Successfuly saved figure {fig_file}!')

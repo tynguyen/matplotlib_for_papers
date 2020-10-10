@@ -16,7 +16,7 @@ xlim:
     [-1,6]
     #[-10,600]
 ylim:
-    [0.6,0.82]
+    [0.55,0.82]
 xlabels:
     ['zero-shot','one-shot','5-shot','50-shot','200-shot', 'all-shot']
 xticks:
@@ -37,4 +37,10 @@ legends:
     ['N-shot Detection mAP']
 reduce_func:
     'mean'
-
+# Additional points to add to the axis (baseline, zero-shot
+point_values:
+    [[5,0.743], [0,0.601], [2, 0.776]]
+point_labels:
+    ['Baseline', 'Syn-model', '5-shot']
+point_markers:
+    ['rs', 'bo', 'k*']
