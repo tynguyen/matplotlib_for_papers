@@ -1,5 +1,5 @@
 fig_name: 
-    "lines.pdf"
+    "fewshot_detection.pdf"
 config_file:
     "configs/icra2020_fewshot_performance.xml"
 root_dir:
@@ -16,7 +16,7 @@ xlim:
     [-1,6]
     #[-10,600]
 ylim:
-    [0.55,0.82]
+    [0.,0.85]
 xlabels:
     ['zero-shot','one-shot','5-shot','50-shot','200-shot', 'all-shot']
 xticks:
@@ -26,7 +26,7 @@ x_values:
     [0,1,2,3,4,5]
     #[0,1,5,50,200,575]
 yticks:
-    [0.60,0.65,0.70,0.75,0.80]
+    [0.10, 0.60,0.65,0.70,0.75,0.80]
 ylabels:
     []
 xtitle:
@@ -34,13 +34,15 @@ xtitle:
 ytitle:
     'mAP'
 legends:
-    ['N-shot Detection mAP']
+    ['N-shot Pretrained on Synthetic','N-shot Pretrained on ImageNet']
 reduce_func:
     'mean'
 # Additional points to add to the axis (baseline, zero-shot
 point_values:
     [[5,0.743], [0,0.601], [2, 0.776]]
 point_labels:
-    ['Baseline', 'Syn-model', '5-shot']
+    ['Baseline', 'Zero-shot Syn', '5-shot Syn']
 point_markers:
-    ['rs', 'bo', 'k*']
+    ['s', 'o', "H"]
+point_colors:
+    ['#dd5a2b','#80d1e3', 'r']

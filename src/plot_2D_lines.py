@@ -27,7 +27,7 @@ def load(root, extension='.txt', cols_per_file=5, skip_rows=False):
         skip_rows (boolean): whether skip the first 'skip_rows' rows of each file
         extension (str): extension of each file
     '''
-    f_list = glob.glob(root + f'/*{extension}')
+    f_list = sorted(glob.glob(root + f'/*{extension}'))
     num_lines = sum(1 for line in open(f_list[0])) - skip_rows
     i = 0;
     data = np.zeros((len(f_list), num_lines, cols_per_file)) 
@@ -62,20 +62,30 @@ def proceed_data(data, func_name):
     data = func_map[func_name](data, axis=1)
     return data
 
-def plot_line(ax):
+def plot_line(ax, show_boundary_lines=True):
+    '''
+    If show_boundary_lines == False, only show x and y axes, not top, right lines
+    '''
     # now all plot function should be applied to ax
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
-    ax.spines['left'].set_visible(False)
+    ax.spines['top'].set_visible(show_boundary_lines)
+    ax.spines['right'].set_visible(show_boundary_lines)
+    ax.spines['left'].set_visible(show_boundary_lines)
     ax.get_xaxis().tick_bottom()
     ax.get_yaxis().tick_left()
+    
+    # Draw ticks 
     ax.tick_params(axis='x', direction='out')
-    ax.tick_params(axis='y', length=0)
+    ax.tick_params(axis='y', direction='out')
+    #ax.tick_params(axis='y', length=0)
+
     # offset the spines
-    for spine in ax.spines.values():
-    	spine.set_position(('outward', 5))
+    if not show_boundary_lines:
+        for spine in ax.spines.values():
+            spine.set_position(('outward', 5))
+
     ax.grid(axis='y', color="0.9", linestyle='dashed', linewidth=1)
     ax.grid(axis='x', color="0.9", linestyle='dashed', linewidth=1)
+
     # put the grid behind
     ax.set_axisbelow(True)
 
@@ -88,7 +98,7 @@ def plot_line(ax):
         x_values = opt['x_values']
     
     for i in range(num_lines):
-        ax.plot(x_values, data[i], linewidth=2, color=colors[i], linestyle=line_styles[i][0])
+        ax.plot(x_values, data[i], linewidth=2, color=colors[i+2], linestyle=line_styles[i][0])
     
     if opt['xlim']:
         xlim(opt['xlim'][0], opt['xlim'][1])
@@ -118,18 +128,20 @@ def plot_line(ax):
     # Display xticks evenly regardless of their values:
     #ax.xaxis.set_minor_locator(plt.MultipleLocator(len(x_values))) # locates ticks at a multiple of the number you provide, as here 0.25 (keeps ticks evenly spaced)
 
-def plot_points(ax, point_values, point_labels, point_markers):
+def plot_points(ax, point_values, point_labels, point_markers, point_colors):
     '''
     Plot points
     ax (mpl.axes): subplot to display 
     point_values (list(list)): points i.e. [[5,0.743], [0,0.601]] 
     point_labels (list(str)): labels of points i.e. ['Baseline', 'Zero-shot'] 
-    point_markers(list(str)): markers for each point i.e. ['rs', 'bo'] 
+    point_markers(list(str)): markers for each point i.e. ['s', 'o'] 
+    point_colors(list(str)): colors for each point i.e. ['r', 'b'] 
     '''
-    for i, (point, label, marker) in enumerate(zip(point_values, point_labels, point_markers)):
+    for i, (point, label, marker, color) in enumerate(zip(point_values, point_labels, point_markers, point_colors)):
         #ax.annotate(f'{label}', xy=point, xytext=(point[0]+10, point[1]-10), textcoords=label)
         ax.annotate(f'{label}', xy=point, xytext=(-20,10), textcoords='offset points')
-        ax.plot(point[0], point[1], marker)
+        #ax.plot(point[0], point[1], marker, alpha=0.5)#='s', color='#cfbbb0', alpha=0.5)
+        ax.plot(point[0], point[1], marker, alpha=0.5)#='s', color='#cfbbb0', alpha=0.5)
         
 
 if __name__=="__main__":
@@ -148,7 +160,7 @@ if __name__=="__main__":
 
     # Prepare to draw and save figs
     num_lines = data.shape[0]
-    colors = gen_colors(num_lines)
+    colors = gen_colors(num_lines+2)
     line_styles = gen_line_styles(num_lines)
     if not opt['saving_dir']:
         opt['saving_dir'] = opt['root_dir']
@@ -162,7 +174,7 @@ if __name__=="__main__":
     plot_line(ax1)
 
     if len(opt['point_values']) > 0:
-        plot_points(ax1, opt['point_values'], opt['point_labels'], opt['point_markers'])
+        plot_points(ax1, opt['point_values'], opt['point_labels'], opt['point_markers'], opt['point_colors'])
 
     plt.show()
     fig.savefig(fig_file)

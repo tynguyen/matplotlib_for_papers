@@ -1,0 +1,2 @@
+zero_shot   1-shot  5-shot  50-shot 200-shot    all-shot
+0.601   0.610   0.776   0.803   0.808   0.819
