@@ -34,7 +34,7 @@ xtitle:
 ytitle:
     'mAP'
 legends:
-    ['N-shot Pretrained on Synthetic','N-shot Pretrained on ImageNet']
+    ['N-shot Pretrained on ImageNet','N-shot Pretrained on Synthetic']
 reduce_func:
     'mean'
 # Additional points to add to the axis (baseline, zero-shot
