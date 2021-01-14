@@ -1,7 +1,7 @@
 single_plot_params = {
     'axes.labelsize': 8,
     'font.size': 8,
-    'font.family': {'serif','Times','sans-serif','monospace'},
+    #'font.family': {'monospace','Times','sans-serif','monospace'},
     'legend.fontsize': 7,
     'xtick.labelsize': 7,
     'ytick.labelsize': 8,
