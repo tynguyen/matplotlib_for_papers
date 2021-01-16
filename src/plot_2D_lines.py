@@ -139,7 +139,7 @@ def plot_points(ax, point_values, point_labels, point_markers, point_colors):
     '''
     for i, (point, label, marker, color) in enumerate(zip(point_values, point_labels, point_markers, point_colors)):
         #ax.annotate(f'{label}', xy=point, xytext=(point[0]+10, point[1]-10), textcoords=label)
-        ax.annotate(f'{label}', xy=point, xytext=(-20,10), textcoords='offset points')
+        ax.annotate(f'{label}', xy=point, xytext=(-15,5), textcoords='offset points')
         #ax.plot(point[0], point[1], marker, alpha=0.5)#='s', color='#cfbbb0', alpha=0.5)
         ax.plot(point[0], point[1], marker, alpha=0.5)#='s', color='#cfbbb0', alpha=0.5)
         

@@ -3,7 +3,7 @@ fig_name:
 config_file:
     "configs/icra2020_fewshot_performance.xml"
 root_dir:
-    "/media/tynguyen/tynguyen_SSD/ICRA2020/test_logs/cleaned_real_test_set/plots"
+    "/media/tynguyen/tynguyen_SSD/ICRA2020/test_logs/cleaned_real_test_set/plots/revision_submission"
 saving_dir:
     ""
 cols_per_file:
@@ -34,7 +34,10 @@ xtitle:
 ytitle:
     'mAP'
 legends:
-    ['N-shot Pretrained on ImageNet','N-shot Pretrained on Synthetic']
+    ['N-shot Pretrained on ImageNet',
+    'N-shot Pretrained on Amateur-UAV',
+    'N-shot Pretrained on GAN',
+    'N-shot Pretrained on Synthetic'] 
 reduce_func:
     'mean'
 # Additional points to add to the axis (baseline, zero-shot
