@@ -3,7 +3,7 @@ fig_name:
 config_file:
     "configs/icra2020_fewshot_performance.xml"
 root_dir:
-    "/media/tynguyen/tynguyen_SSD/ICRA2020/test_logs/cleaned_real_test_set/plots/revision_submission"
+    "/media/tynguyen/tynguyen_SSD/ICRA2020/test_logs/cleaned_real_test_set/plots/revision_submission_real_MAV"
 saving_dir:
     ""
 cols_per_file:

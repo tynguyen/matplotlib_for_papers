@@ -1,0 +1,51 @@
+fig_name: 
+    "fewshot_detection.pdf"
+config_file:
+    "configs/icra2020_fewshot_performance.xml"
+root_dir:
+    "/media/tynguyen/tynguyen_SSD/ICRA2020/test_logs/cleaned_real_test_set/plots/revision_submission_amateur_UAV"
+saving_dir:
+    ""
+cols_per_file:
+    6
+extension:
+    ".txt"
+skip_rows:
+    1
+xlim:
+    [-1,6]
+    #[-10,600]
+ylim:
+    [0.,0.85]
+xlabels:
+    ['zero-shot','one-shot','5-shot','50-shot','200-shot', 'all-shot']
+xticks:
+    [0,1,2,3,4,5]
+    #[0,1,5,50,200,600]
+x_values:
+    [0,1,2,3,4,5]
+    #[0,1,5,50,200,575]
+yticks:
+    [0.10, 0.60,0.65,0.70,0.75,0.80]
+ylabels:
+    []
+xtitle:
+    'N-shot Models'
+ytitle:
+    'mAP'
+legends:
+    ['N-shot Pretrained on ImageNet',
+    'N-shot Pretrained on Real-MAV',
+    'N-shot Pretrained on GAN',
+    'N-shot Pretrained on Synthetic'] 
+reduce_func:
+    'mean'
+# Additional points to add to the axis (baseline, zero-shot
+point_values:
+    [[5,0.743], [0,0.601], [2, 0.776]]
+point_labels:
+    ['Baseline', 'Zero-shot Syn', '5-shot Syn']
+point_markers:
+    ['s', 'o', "H"]
+point_colors:
+    ['#dd5a2b','#80d1e3', 'r']

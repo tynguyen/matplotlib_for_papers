@@ -40,7 +40,7 @@ def str2Bool(s):
     return False if 'f' in s.lower() else True
 def parse_configs():
     parser = argparse.ArgumentParser("Plot lines")
-    parser.add_argument("--config_file",help="Name of the configuration file that defines the figure",default="configs/icra2020_fewshot_performance.yml", type=str)
+    parser.add_argument("--config_file",help="Name of the configuration file that defines the figure",default="configs/icra2020_fewshot_performance_real_MAV.yml", type=str)
 
     opt = parser.parse_args()
     config_file = opt.config_file 
