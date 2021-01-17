@@ -3,6 +3,8 @@ single_plot_params = {
     'font.size': 8,
     #'font.family': {'monospace','Times','sans-serif','monospace'},
     'legend.fontsize': 7,
+    'pdf.fonttype': 42,
+    'ps.fonttype': 42,
     'xtick.labelsize': 7,
     'ytick.labelsize': 8,
     'text.usetex': False,
